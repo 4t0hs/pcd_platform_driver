@@ -1,0 +1,14 @@
+/.Module.symvers.cmd
+/.modules.order.cmd
+/.platform_device_setup.ko.cmd
+/.platform_device_setup.mod.cmd
+/.platform_device_setup.mod.o.cmd
+/.platform_device_setup.o.cmd
+/.vscode
+/Module.symvers
+/modules.order
+/platform_device_setup.ko
+/platform_device_setup.mod
+/platform_device_setup.mod.c
+/platform_device_setup.mod.o
+/platform_device_setup.o
