@@ -3,9 +3,6 @@
 
 #include "platform.h"
 
-#undef pr_fmt
-#define pr_fmt(fmt) "[PCD]%s: " fmt "\n", __func__
-
 struct pcd_platform_data pcd1_data = {
 	.size = 512,
 	.serial_number = "PCD-XYZ-1",
@@ -17,13 +14,15 @@ struct pcd_platform_data pcd2_data = {
 	.permission = READ_WRITE,
 };
 
+/* カーネルがデバイスを解放するときのハンドラ */
 static void pcd_release(struct device *dev) {
 	struct pcd_platform_data *data = dev->platform_data;
 	pr_info("Device released: %s", data->serial_number);
 }
 
 struct platform_device device1 = {
-	.name = "pseudo-char-device",
+	/* ここの名前でドライバーを検索する */
+	.name = PLATFORM_NAME,
 	.id = 0,
 	.dev = {
 		.platform_data = &pcd1_data,
@@ -31,7 +30,7 @@ struct platform_device device1 = {
 	},
 };
 struct platform_device device2 = {
-	.name = "pseudo-char-device",
+	.name = PLATFORM_NAME,
 	.id = 1,
 	.dev = {
 		.platform_data = &pcd2_data,
@@ -39,24 +38,26 @@ struct platform_device device2 = {
 	},
 };
 
-static int __init pcd_platform_init(void) {
+static int __init platform_device_init(void) {
 	platform_device_register(&device1);
 	platform_device_register(&device2);
 
-	pr_info("Device setup module inserted");
+	pr_info("Device setup module loaded");
 	return 0;
 }
 
-static void __exit pcd_platform_exit(void) {
+static void __exit platform_device_exit(void) {
 	platform_device_unregister(&device1);
 	platform_device_unregister(&device2);
 
-	pr_info("Device setup module removed.");
+	pr_info("Device setup module unloaded.");
 }
 
-module_init(pcd_platform_init);
-module_exit(pcd_platform_exit);
+module_init(platform_device_init);
+module_exit(platform_device_exit);
 
+#if !defined(IGNORE)
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Atohs");
-MODULE_DESCRIPTION("");
+MODULE_DESCRIPTION("Platform device setup module");
+#endif

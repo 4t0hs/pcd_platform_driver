@@ -12,3 +12,12 @@
 /platform_device_setup.mod.c
 /platform_device_setup.mod.o
 /platform_device_setup.o
+.pcd_platform_driver.ko.cmd
+.pcd_platform_driver.mod.cmd
+.pcd_platform_driver.mod.o.cmd
+.pcd_platform_driver.o.cmd
+pcd_platform_driver.ko
+pcd_platform_driver.mod
+pcd_platform_driver.mod.c
+pcd_platform_driver.mod.o
+pcd_platform_driver.o
